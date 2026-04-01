@@ -17,6 +17,7 @@ class LandingScreen extends StatefulWidget {
 class _LandingScreenState extends State<LandingScreen> {
   final _scrollController = ScrollController();
   final _resumeKey = GlobalKey();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void dispose() {
@@ -38,9 +39,14 @@ class _LandingScreenState extends State<LandingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: AppColors.heroGradient[0],
         foregroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(LucideIcons.menu),
+          onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+        ),
         title: const Text(
           'Parveen Eswaran',
           style: TextStyle(
