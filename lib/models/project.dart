@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class Project {
   final String title;
@@ -44,7 +45,7 @@ const List<Project> portfolioProjects = [
       'Real-time notifications and audit logging',
     ],
     tags: ['React', 'TypeScript', 'AWS Amplify', 'DynamoDB', 'Cognito', 'Lambda'],
-    icon: Icons.dashboard_rounded,
+    icon: LucideIcons.layoutDashboard,
     logoAsset: 'lib/assets/tethertasks_logo.png',
     logoNeedsSurface: true,
     website: 'https://www.tethertasks.com',
@@ -64,7 +65,7 @@ const List<Project> portfolioProjects = [
       'Cross-platform Flutter application',
     ],
     tags: ['Flutter', 'AWS Bedrock', 'Amplify', 'AI/ML', 'EdTech'],
-    icon: Icons.school_rounded,
+    icon: LucideIcons.graduationCap,
     logoAsset: 'lib/assets/lessonpathpro_logo.png',
     website: 'http://amzn-lessonpathpro-bucket.s3-website-us-east-1.amazonaws.com',
     color: Color(0xFF5D6D7E),
@@ -83,7 +84,7 @@ const List<Project> portfolioProjects = [
       'Reduced downtime by 30%',
     ],
     tags: ['Microservices', 'Docker', 'Kubernetes', 'CI/CD', 'Datadog'],
-    icon: Icons.hub_rounded,
+    icon: LucideIcons.network,
     color: Color(0xFF4F6F6C),
   ),
   Project(
@@ -99,7 +100,7 @@ const List<Project> portfolioProjects = [
       'Integrated with internal tooling ecosystem',
     ],
     tags: ['Angular', 'TypeScript', 'Platform Engineering', 'SRE'],
-    icon: Icons.search_rounded,
+    icon: LucideIcons.search,
     color: Color(0xFF8A6F4D),
   ),
   Project(
@@ -116,7 +117,7 @@ const List<Project> portfolioProjects = [
       'Saved 200+ dev hours/month with shared components',
     ],
     tags: ['Angular', 'Docker', 'Embedded', 'Kiosk', 'IoT'],
-    icon: Icons.precision_manufacturing_rounded,
+    icon: LucideIcons.cog,
     color: Color(0xFF6B5B7A),
   ),
   Project(
@@ -133,7 +134,7 @@ const List<Project> portfolioProjects = [
       'Production-quality analytical outputs',
     ],
     tags: ['AngularJS', 'jQuery', 'Analytics', 'Data Viz'],
-    icon: Icons.analytics_rounded,
+    icon: LucideIcons.barChart3,
     color: Color(0xFF4E6A78),
   ),
 ];

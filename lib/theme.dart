@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const primary = Color(0xFF2F3E46);
-  static const accent = Color(0xFF6B8797);
-  static const accentLight = Color(0xFF87A0AE);
-  static const surface = Color(0xFFF8F5F0);
+  static const primary = Color(0xFF1B2838);
+  static const accent = Color(0xFF4A7C96);
+  static const accentLight = Color(0xFF6A9AB5);
+  static const surface = Color(0xFFF4F6F8);
   static const card = Colors.white;
-  static const textPrimary = Color(0xFF25333A);
-  static const textSecondary = Color(0xFF52626D);
-  static const textMuted = Color(0xFF74838D);
-  static const textFaint = Color(0xFFA5B0B7);
-  static const divider = Color(0xFFE6E0D8);
-  static const accentSurface = Color(0xFFF1ECE4);
+  static const textPrimary = Color(0xFF1A2530);
+  static const textSecondary = Color(0xFF445566);
+  static const textMuted = Color(0xFF6B7D8D);
+  static const textFaint = Color(0xFF9EAAB4);
+  static const divider = Color(0xFFDFE4E9);
+  static const accentSurface = Color(0xFFEBF1F5);
 
   static const heroGradient = [
-    Color(0xFF4C6471),
-    Color(0xFF7B909B),
+    Color(0xFF1E3044),
+    Color(0xFF3A5A72),
   ];
 }
 

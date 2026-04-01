@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/project.dart';
 import '../theme.dart';
@@ -210,7 +211,7 @@ class ProjectDetailScreen extends StatelessWidget {
                         child: Row(
                           children: [
                             Icon(
-                              Icons.language_rounded,
+                              LucideIcons.globe,
                               size: 18,
                               color: project.color,
                             ),
@@ -233,7 +234,7 @@ class ProjectDetailScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   _buildDetailCard(
                     title: 'Overview',
-                    icon: Icons.description_outlined,
+                    icon: LucideIcons.fileText,
                     child: Text(
                       project.description,
                       style: const TextStyle(
@@ -246,7 +247,7 @@ class ProjectDetailScreen extends StatelessWidget {
                   const SizedBox(height: 12),
                   _buildDetailCard(
                     title: 'Key Highlights',
-                    icon: Icons.star_outline_rounded,
+                    icon: LucideIcons.star,
                     child: Column(
                       children: project.highlights
                           .map(
@@ -265,7 +266,7 @@ class ProjectDetailScreen extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(6),
                                     ),
                                     child: Icon(
-                                      Icons.check_rounded,
+                                      LucideIcons.check,
                                       size: 14,
                                       color: project.color,
                                     ),
@@ -291,7 +292,7 @@ class ProjectDetailScreen extends StatelessWidget {
                   const SizedBox(height: 12),
                   _buildDetailCard(
                     title: 'Tech Stack',
-                    icon: Icons.code_rounded,
+                    icon: LucideIcons.code,
                     child: Wrap(
                       spacing: 8,
                       runSpacing: 8,

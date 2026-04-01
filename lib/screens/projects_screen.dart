@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../models/project.dart';
 import '../theme.dart';
 import 'project_detail_screen.dart';
@@ -261,7 +262,7 @@ class _ProjectCard extends StatelessWidget {
                     ),
                   ),
                   Icon(
-                    Icons.arrow_forward_ios_rounded,
+                    LucideIcons.chevronRight,
                     color: Colors.white.withValues(alpha: 0.5),
                     size: 16,
                   ),

@@ -1,27 +1,215 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../theme.dart';
 import 'projects_screen.dart';
+import 'experience_screen.dart';
+import 'certifications_screen.dart';
+import 'contact_screen.dart';
+import '../utils/resume_helper.dart';
 
-class LandingScreen extends StatelessWidget {
+class LandingScreen extends StatefulWidget {
   const LandingScreen({super.key});
+
+  @override
+  State<LandingScreen> createState() => _LandingScreenState();
+}
+
+class _LandingScreenState extends State<LandingScreen> {
+  final _scrollController = ScrollController();
+  final _resumeKey = GlobalKey();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollToResume() {
+    final keyContext = _resumeKey.currentContext;
+    if (keyContext != null) {
+      Scrollable.ensureVisible(
+        keyContext,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.heroGradient[0],
+        foregroundColor: Colors.white,
+        title: const Text(
+          'Parveen Eswaran',
+          style: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.3,
+          ),
+        ),
+        elevation: 0,
+      ),
+      drawer: Drawer(
+        backgroundColor: AppColors.primary,
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 28, 20, 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 52,
+                      height: 52,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withValues(alpha: 0.1),
+                        border: Border.all(
+                          color: Colors.white.withValues(alpha: 0.2),
+                        ),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'PE',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w300,
+                            color: Colors.white,
+                            letterSpacing: 4,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    const Text(
+                      'Parveen Eswaran',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      'Senior Full-Stack Engineer',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.white.withValues(alpha: 0.55),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Divider(
+                color: Colors.white.withValues(alpha: 0.1),
+                height: 1,
+              ),
+              const SizedBox(height: 8),
+              _drawerItem(
+                icon: LucideIcons.rocket,
+                label: 'Portfolio',
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const ProjectsScreen(),
+                    ),
+                  );
+                },
+              ),
+              _drawerItem(
+                icon: LucideIcons.briefcase,
+                label: 'Experience',
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const ExperienceScreen(),
+                    ),
+                  );
+                },
+              ),
+              _drawerItem(
+                icon: LucideIcons.award,
+                label: 'Certifications',
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const CertificationsScreen(),
+                    ),
+                  );
+                },
+              ),
+              _drawerItem(
+                icon: LucideIcons.fileDown,
+                label: 'Resume',
+                onTap: () {
+                  Navigator.pop(context);
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    _scrollToResume();
+                  });
+                },
+              ),
+              _drawerItem(
+                icon: LucideIcons.mail,
+                label: 'Contact',
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const ContactScreen(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           children: [
             _buildHeroSection(context),
             _buildAboutSection(),
             _buildSkillsSection(),
-            _buildExperienceSection(),
             _buildEducationSection(),
-            _buildCertificationsSection(),
-            _buildContactSection(),
+            _buildResumeSection(),
+            _buildContactSection(context),
             const SizedBox(height: 48),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _drawerItem({
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return ListTile(
+      leading: Icon(icon, color: Colors.white.withValues(alpha: 0.7), size: 20),
+      title: Text(
+        label,
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: Colors.white.withValues(alpha: 0.85),
+        ),
+      ),
+      onTap: onTap,
+      dense: true,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
     );
   }
 
@@ -30,97 +218,97 @@ class LandingScreen extends StatelessWidget {
       width: double.infinity,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
           colors: AppColors.heroGradient,
         ),
       ),
-      child: SafeArea(
-        bottom: false,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 52),
-          child: Column(
-            children: [
-              Container(
-                width: 96,
-                height: 96,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 36),
+        child: Column(
+          children: [
+            // Monogram avatar
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white.withValues(alpha: 0.2),
+                  width: 1.5,
+                ),
+              ),
+              child: Container(
+                margin: const EdgeInsets.all(3),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(
-                    color: AppColors.accent.withValues(alpha: 0.6),
-                    width: 2.5,
-                  ),
-                  color: AppColors.accent.withValues(alpha: 0.15),
+                  color: Colors.white.withValues(alpha: 0.1),
                 ),
                 child: const Center(
                   child: Text(
                     'PE',
                     style: TextStyle(
-                      fontSize: 34,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w300,
                       color: Colors.white,
-                      letterSpacing: 3,
+                      letterSpacing: 5,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 22),
-              const Text(
-                'Parveen Eswaran',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                  letterSpacing: 0.5,
+            ),
+            const SizedBox(height: 18),
+            // Title lines
+            Text(
+              'Senior Full-Stack Engineer',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Colors.white.withValues(alpha: 0.9),
+                letterSpacing: 0.2,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Multi-Tenant SaaS Architect',
+              style: TextStyle(
+                fontSize: 13,
+                color: Colors.white.withValues(alpha: 0.5),
+                letterSpacing: 0.2,
+              ),
+            ),
+            const SizedBox(height: 12),
+            // Location pill
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: Colors.white.withValues(alpha: 0.12),
                 ),
               ),
-              const SizedBox(height: 8),
-              Text(
-                'Full-Stack Engineer | Multi-Tenant SaaS Architect',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.white.withValues(alpha: 0.7),
-                  letterSpacing: 0.3,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                'Groton, MA',
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.white.withValues(alpha: 0.45),
-                ),
-              ),
-              const SizedBox(height: 30),
-              FilledButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const ProjectsScreen(),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    LucideIcons.mapPin,
+                    size: 11,
+                    color: Colors.white.withValues(alpha: 0.5),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    'Groton, MA',
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: Colors.white.withValues(alpha: 0.5),
+                      fontWeight: FontWeight.w500,
                     ),
-                  );
-                },
-                icon: const Icon(Icons.rocket_launch_rounded, size: 18),
-                label: const Text(
-                  'Portfolio Highlights',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                ),
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.accent,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 28,
-                    vertical: 14,
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -293,158 +481,6 @@ class LandingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildExperienceSection() {
-    final experiences = [
-      _ExperienceItem(
-        company: 'TetherTasks',
-        role: 'Full-Stack Engineer | Technical Founder',
-        location: 'Remote',
-        period: 'Jan 2026 - Present',
-        highlights: [
-          'Architecting secure multi-tenant SaaS platform from the ground up',
-          'Built with React, TypeScript, AWS Amplify, DynamoDB, and Cognito',
-          'Role-based access control with tenant isolation by design',
-          'Stripe integration for subscription billing',
-        ],
-      ),
-      _ExperienceItem(
-        company: 'ZoomInfo',
-        role: 'Senior Software Engineer / Technical Team Lead',
-        location: 'Waltham, MA',
-        period: 'May 2022 - Feb 2025',
-        highlights: [
-          'Led monolith-to-microservices transition, improving scalability across global teams',
-          'Built internal SRE lookup tool, reducing response time by 20-30%',
-          'Built Datadog dashboards reducing downtime by 30%',
-          'Mentored junior engineers in skill development',
-        ],
-      ),
-      _ExperienceItem(
-        company: 'Waters Technologies',
-        role: 'Senior Software Engineer',
-        location: 'Milford, MA',
-        period: 'Apr 2018 - Apr 2022',
-        highlights: [
-          'Integrated embedded devices with kiosk UIs via event buses on Docker/K8s',
-          'Created reusable UI library saving 200+ dev hours/month',
-          'Enhanced UX on patented instrument devices',
-        ],
-      ),
-      _ExperienceItem(
-        company: 'MIT Lincoln Laboratory',
-        role: 'Software Engineer',
-        location: 'Lexington, MA',
-        period: 'Nov 2015 - Mar 2018',
-        highlights: [
-          'UI Developer for proprietary data discovery & collaboration tool',
-          'Android Developer for mobile planning & estimation tool',
-          'Built data visualization & video analytics features',
-        ],
-      ),
-      _ExperienceItem(
-        company: 'Small Business Insurance Agency',
-        role: 'Web Developer',
-        location: 'Worcester, MA',
-        period: 'Mar 2010 - Jan 2015',
-        highlights: [
-          'Built front-end components with AngularJS + .NET REST APIs',
-          'Automated insurance application packets, reducing prep time by 30%',
-        ],
-      ),
-    ];
-
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 28, 20, 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _sectionTitle('Experience'),
-          const SizedBox(height: 14),
-          ...experiences.map(
-            (exp) => Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: _card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                exp.company,
-                                style: const TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.textPrimary,
-                                ),
-                              ),
-                              const SizedBox(height: 3),
-                              Text(
-                                exp.role,
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.accent,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '${exp.location}  \u00b7  ${exp.period}',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: AppColors.textFaint,
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Divider(height: 1),
-                    ),
-                    ...exp.highlights.map(
-                      (h) => Padding(
-                        padding: const EdgeInsets.only(bottom: 6),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(top: 7, right: 10),
-                              child: CircleAvatar(
-                                radius: 2.5,
-                                backgroundColor: AppColors.accent,
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                h,
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                  height: 1.5,
-                                  color: AppColors.textMuted,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildEducationSection() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 28, 20, 0),
@@ -464,7 +500,7 @@ class LandingScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(
-                    Icons.school_rounded,
+                    LucideIcons.graduationCap,
                     color: AppColors.accent,
                     size: 22,
                   ),
@@ -509,55 +545,50 @@ class LandingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCertificationsSection() {
-    final certs = [
-      ('AWS Certified Cloud Practitioner', Icons.cloud_outlined, const Color(0xFFD97706)),
-      ('Microsoft Azure AI Associate Engineer', Icons.psychology_outlined, const Color(0xFF2563EB)),
-      ('Agile Certified Practitioner (PMI-ACP)', Icons.speed_outlined, const Color(0xFF059669)),
-      ('Certified Associate in Project Management', Icons.task_alt_outlined, const Color(0xFF7C3AED)),
-    ];
-
+  Widget _buildResumeSection() {
     return Padding(
+      key: _resumeKey,
       padding: const EdgeInsets.fromLTRB(20, 28, 20, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _sectionTitle('Certifications'),
+          _sectionTitle('Resume'),
           const SizedBox(height: 14),
-          ...certs.map(
-            (cert) => Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: _card(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 38,
-                      height: 38,
-                      decoration: BoxDecoration(
-                        color: cert.$3.withValues(alpha: 0.08),
-                        borderRadius: BorderRadius.circular(8),
+          _card(
+            child: GestureDetector(
+              onTap: shareResume,
+              child: Row(
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: AppColors.accentSurface,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Icon(
+                      LucideIcons.fileDown,
+                      color: AppColors.accent,
+                      size: 22,
+                    ),
+                  ),
+                  const SizedBox(width: 14),
+                  const Expanded(
+                    child: Text(
+                      'Download Resume',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textPrimary,
                       ),
-                      child: Icon(cert.$2, color: cert.$3, size: 20),
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        cert.$1,
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                    ),
-                    Icon(
-                      Icons.verified_rounded,
-                      color: cert.$3,
-                      size: 18,
-                    ),
-                  ],
-                ),
+                  ),
+                  Icon(
+                    LucideIcons.chevronRight,
+                    size: 18,
+                    color: AppColors.textFaint,
+                  ),
+                ],
               ),
             ),
           ),
@@ -566,7 +597,7 @@ class LandingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildContactSection() {
+  Widget _buildContactSection(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 28, 20, 0),
       child: Column(
@@ -577,11 +608,21 @@ class LandingScreen extends StatelessWidget {
           _card(
             child: Column(
               children: [
-                _contactRow(Icons.email_outlined, 'parveeneswaran@outlook.com'),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ContactScreen(),
+                      ),
+                    );
+                  },
+                  child: _contactRow(LucideIcons.mail, 'parveeneswaran@outlook.com'),
+                ),
                 const Divider(height: 20),
-                _contactRow(Icons.phone_outlined, '(508) 826-0653'),
+                _contactRow(LucideIcons.phone, '(508) 826-0653'),
                 const Divider(height: 20),
-                _contactRow(Icons.location_on_outlined, 'Groton, MA 01450'),
+                _contactRow(LucideIcons.mapPin, 'Groton, MA 01450'),
               ],
             ),
           ),
@@ -644,20 +685,4 @@ class LandingScreen extends StatelessWidget {
       child: child,
     );
   }
-}
-
-class _ExperienceItem {
-  final String company;
-  final String role;
-  final String location;
-  final String period;
-  final List<String> highlights;
-
-  const _ExperienceItem({
-    required this.company,
-    required this.role,
-    required this.location,
-    required this.period,
-    required this.highlights,
-  });
 }
